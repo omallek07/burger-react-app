@@ -6,7 +6,12 @@ import UserOutput from './user-output'
 
 class App extends Component {
   state = {
-    userName: 'Super Kev',
+    userName: 'Jack',
+    userNames: [
+      'Super Kevin',
+      'Maria',
+      'Ollie'
+    ],
     showUsers: false
   }
 
@@ -27,8 +32,10 @@ class App extends Component {
       boxShadow: '0 1px 3px #ccc',
       font: 'inherit',
       padding: '8px',
+      margin: '10px',
       cursor: 'pointer'
     }
+
     return (
       <div className="App">
         <h1>Hi, This is a test project</h1>
@@ -38,13 +45,15 @@ class App extends Component {
           onClick={this.togglePersonsHandler}>
           Click to toggle visibility
         </button>
-        { showUsers ?
+        { showUsers &&
           <div>
-            <UserOutput userName={'Kevin'} />
-            <UserOutput userName={'Maria'} />
-            <UserOutput userName={'Ollie'} />
             <UserOutput userName={this.state.userName} />
-          </div> : null
+            {
+            this.state.userNames.map(user =>
+            <UserOutput
+              userName={user} />
+            )}
+          </div>
         }
       </div>
     );
