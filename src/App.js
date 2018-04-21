@@ -24,6 +24,13 @@ class App extends Component {
     this.setState({showUsers: !doesShow})
   }
 
+  deletePersonHandler = (personIndex) => {
+    console.log('hello')
+    const users = [...this.state.userNames]
+    users.splice(personIndex, 1);
+    this.setState({userNames: users})
+  }
+
   render() {
     const { showUsers } = this.state;
     const buttonStyle = {
@@ -39,18 +46,21 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Hi, This is a test project</h1>
+
         <UserInput userName={this.state.userName} changeHandler={this.onChangeHandler} />
         <button
           style={buttonStyle}
           onClick={this.togglePersonsHandler}>
           Click to toggle visibility
         </button>
+
         { showUsers &&
           <div>
             <UserOutput userName={this.state.userName} />
             {
-            this.state.userNames.map(user =>
+            this.state.userNames.map((user, index) =>
             <UserOutput
+              deleteClick={() => this.deletePersonHandler(index)}
               userName={user} />
             )}
           </div>

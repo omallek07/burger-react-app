@@ -14,8 +14,11 @@ const UserOutput = (props) => {
 
     return (
       <div style={style}>
-      <p>This is a story about {props.userName}</p>
-      <p>{props.userName} is funny</p>
+        <p>This is a story about {props.userName}</p>
+        <p>{props.userName} is funny</p>
+        <button onClick={props.deleteClick}>
+          Click to delete
+        </button>
       </div>
     )
 }
