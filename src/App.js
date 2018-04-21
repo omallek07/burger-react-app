@@ -8,27 +8,40 @@ class App extends Component {
   state = {
     userName: 'Jack',
     userNames: [
-      'Super Kevin',
-      'Maria',
-      'Ollie'
+      { id: '3we', name: 'Super Kevin' },
+      { id: '32r', name: 'Maria' },
+      { id: '4r3', name: 'Ollie' }
     ],
     showUsers: false
   }
 
   onChangeHandler = (event) => {
-    this.setState({userName: event.target.value})
+    this.setState({userName: event.target.value});
+  }
+
+  nameChangedHandler = ( event, id ) => {
+    const userIndex = this.state.userNames.findIndex(user => user.id === id);
+    const updatedUserName = {
+      ...this.state.userNames[userIndex]
+    };
+
+    updatedUserName.name = event.target.value;
+
+    const users = [...this.state.userNames];
+    users[userIndex] = updatedUserName
+
+    this.setState({ userNames: users })
   }
 
   togglePersonsHandler = () => {
-    const doesShow = this.state.showUsers
-    this.setState({showUsers: !doesShow})
+    const doesShow = this.state.showUsers;
+    this.setState({showUsers: !doesShow});
   }
 
   deletePersonHandler = (personIndex) => {
-    console.log('hello')
-    const users = [...this.state.userNames]
+    const users = [...this.state.userNames];
     users.splice(personIndex, 1);
-    this.setState({userNames: users})
+    this.setState({userNames: users});
   }
 
   render() {
@@ -60,8 +73,10 @@ class App extends Component {
             {
             this.state.userNames.map((user, index) =>
             <UserOutput
+              key={user.id}
               deleteClick={() => this.deletePersonHandler(index)}
-              userName={user} />
+              userName={user.name}
+              nameChange={(evt) => this.nameChangedHandler(evt, user.id)} />
             )}
           </div>
         }

@@ -19,6 +19,13 @@ const UserOutput = (props) => {
         <button onClick={props.deleteClick}>
           Click to delete
         </button>
+        <div>
+          Change name:
+          <input
+            type="text"
+            onChange={props.nameChange}
+            value={props.userName} />
+        </div>
       </div>
     )
 }
