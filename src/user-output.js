@@ -1,4 +1,5 @@
 import React from 'react'
+import Radium from 'radium'
 
 const UserOutput = (props) => {
 
@@ -9,7 +10,14 @@ const UserOutput = (props) => {
       border: '1px solid #eee',
       boxShadow: '0 2px 3px #ccc',
       padding: '16px',
-      textAlign: 'center'
+      textAlign: 'center',
+      ':hover': {
+        backgroundColor: 'purple',
+        color: 'white'
+      },
+      '@media (min-width: 500px)' : {
+        width: '450px'
+      }
     }
 
     return (
@@ -30,4 +38,4 @@ const UserOutput = (props) => {
     )
 }
 
-export default UserOutput
+export default Radium(UserOutput)

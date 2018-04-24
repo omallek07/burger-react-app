@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium, { StyleRoot } from 'radium'
+
 import UserInput from './user-input'
 import UserOutput from './user-output'
 import InputValidation from './validation-input-length'
@@ -83,40 +85,42 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
-        <h1>Hi, This is a test project</h1>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi, This is a test project</h1>
 
-        <UserInput userName={this.state.userName} changeHandler={this.onChangeHandler} />
-        <div>
-          Validate this string:
-          <input style={inputStyle} type='text' onChange={this.validateStrHandler} value={this.state.validateStr} />
-        </div>
-        <InputValidation str={this.state.validateStr} />
-
-        {charList}
-
-        <button
-          style={buttonStyle}
-          onClick={this.togglePersonsHandler}>
-          Click to toggle visibility
-        </button>
-
-        { showUsers &&
+          <UserInput userName={this.state.userName} changeHandler={this.onChangeHandler} />
           <div>
-            <UserOutput userName={this.state.userName} />
-            {
-            this.state.userNames.map((user, index) =>
-            <UserOutput
-              key={user.id}
-              deleteClick={() => this.deletePersonHandler(index)}
-              userName={user.name}
-              nameChange={(evt) => this.nameChangedHandler(evt, user.id)} />
-            )}
+            Validate this string:
+            <input style={inputStyle} type='text' onChange={this.validateStrHandler} value={this.state.validateStr} />
           </div>
-        }
-      </div>
+          <InputValidation str={this.state.validateStr} />
+
+          {charList}
+
+          <button
+            style={buttonStyle}
+            onClick={this.togglePersonsHandler}>
+            Click to toggle visibility
+          </button>
+
+          { showUsers &&
+            <div>
+              <UserOutput userName={this.state.userName} />
+              {
+              this.state.userNames.map((user, index) =>
+              <UserOutput
+                key={user.id}
+                deleteClick={() => this.deletePersonHandler(index)}
+                userName={user.name}
+                nameChange={(evt) => this.nameChangedHandler(evt, user.id)} />
+              )}
+            </div>
+          }
+        </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
