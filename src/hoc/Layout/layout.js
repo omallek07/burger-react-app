@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import Aux from '../../hoc/Aux';
+import Aux from '../Aux/Aux';
 import classes from './layout.css';
-import Toolbar from '../Navigation/Toolbar/toolbar'
-import SideDrawer from '../Navigation/SideDrawer/sidedrawer'
+import Toolbar from '../../components/Navigation/Toolbar/toolbar'
+import SideDrawer from '../../components/Navigation/SideDrawer/sidedrawer'
 
 class Layout extends Component {
   state = {
-    showSideDrawer: true
+    showSideDrawer: false
   }
+
   sideDrawerClosedHandler = () => {
     this.setState({ showSideDrawer: false })
   }
