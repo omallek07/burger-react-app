@@ -13,6 +13,11 @@ class ContactData extends Component {
     }
   }
 
+  orderHandler = (event) => {
+    event.preventDefault();
+    console.log(this.props.ingredients)
+  }
+
   render () {
     return (
       <div className={classes.ContactData}>
@@ -39,7 +44,8 @@ class ContactData extends Component {
             name="zipCode"
             placeholder="Zip code" />
           <Button
-            btnType="Success">ORDER</Button>
+            btnType="Success"
+            clicked={this.orderHandler}>ORDER</Button>
         </form>
       </div>
     );
