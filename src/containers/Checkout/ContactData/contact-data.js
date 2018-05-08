@@ -72,7 +72,7 @@ class ContactData extends Component {
 
   orderHandler = (event) => {
     event.preventDefault();
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
@@ -85,6 +85,20 @@ class ContactData extends Component {
     .catch(error => {
       this.setState({ loading: false });
     });
+  }
+
+  inputChangedHandler = (event, inputIdentifier) => {
+    const updatedOrderForm = {
+      ...this.state.orderForm
+    };
+    // Deep clone of object to avoid mutability
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+
+    updatedFormElement.value = event.target.value;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    this.setState({ orderForm: updatedOrderForm })
   }
 
   render () {
@@ -103,7 +117,8 @@ class ContactData extends Component {
             key={formElement.id}
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
-            value={formElement.config.value} />
+            value={formElement.config.value}
+            changed={(event) => this.inputChangedHandler(event, formElement.id)} />
           )
         )}
         <Button
