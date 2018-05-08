@@ -18,6 +18,10 @@ class ContactData extends Component {
           placeholder: 'Your Name'
         },
         value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       street: {
         elementType: 'input',
@@ -26,6 +30,10 @@ class ContactData extends Component {
           placeholder: 'Street Address'
         },
         value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       zipCode: {
         elementType: 'input',
@@ -34,6 +42,12 @@ class ContactData extends Component {
           placeholder: 'ZIP Code'
         },
         value: '',
+        validation: {
+          required: true,
+          minLength: 5,
+          maxLength: 5
+        },
+        valid: false
       },
       country: {
         elementType: 'input',
@@ -42,6 +56,10 @@ class ContactData extends Component {
           placeholder: 'Country'
         },
         value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       email: {
         elementType: 'input',
@@ -50,6 +68,10 @@ class ContactData extends Component {
           placeholder: 'Your E-mail'
         },
         value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       deliveryMethod: {
         elementType: 'select',
@@ -70,13 +92,39 @@ class ContactData extends Component {
     loading: false
   }
 
+  checkValidity(value, rules) {
+    let isValid = false;
+
+    if (rules.required) {
+      isValid = value.trim() !== '';
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength;
+    }
+
+    return isValid;
+  }
+
   orderHandler = (event) => {
     event.preventDefault();
     this.setState({ loading: true });
+
+    const formData = {};
+    for (let formElementIdentifier in this.state.orderForm) {
+      formData[formElementIdentifier] = this.state.orderFrom[formElementIdentifier].value
+    }
+
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
+      orderData: formData
     }
+
     axios.post('/orders.json', order)
     .then(response => {
       this.setState({ loading: false });
@@ -97,6 +145,7 @@ class ContactData extends Component {
     };
 
     updatedFormElement.value = event.target.value;
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
     updatedOrderForm[inputIdentifier] = updatedFormElement;
     this.setState({ orderForm: updatedOrderForm })
   }
@@ -111,7 +160,7 @@ class ContactData extends Component {
     }
 
     let form = (
-      <form>
+      <form onSubmit={this.orderHandler}>
        {formElementsArray.map(formElement => (
          <Input
             key={formElement.id}
@@ -121,9 +170,7 @@ class ContactData extends Component {
             changed={(event) => this.inputChangedHandler(event, formElement.id)} />
           )
         )}
-        <Button
-          btnType="Success"
-          clicked={this.orderHandler}>ORDER</Button>
+        <Button btnType="Success">ORDER</Button>
       </form>
     )
     if (this.state.loading) {
