@@ -21,7 +21,9 @@ class ContactData extends Component {
         validation: {
           required: true
         },
-        valid: false
+        valid: false,
+        touched: false,
+        errorMessage: 'Please enter a valid name!'
       },
       street: {
         elementType: 'input',
@@ -33,7 +35,9 @@ class ContactData extends Component {
         validation: {
           required: true
         },
-        valid: false
+        valid: false,
+        touched: false,
+        errorMessage: 'Please enter a valid street address!'
       },
       zipCode: {
         elementType: 'input',
@@ -47,7 +51,9 @@ class ContactData extends Component {
           minLength: 5,
           maxLength: 5
         },
-        valid: false
+        valid: false,
+        touched: false,
+        errorMessage: 'Please enter a valid ZIP code!'
       },
       country: {
         elementType: 'input',
@@ -59,7 +65,9 @@ class ContactData extends Component {
         validation: {
           required: true
         },
-        valid: false
+        valid: false,
+        touched: false,
+        errorMessage: 'Please enter a valid country!'
       },
       email: {
         elementType: 'input',
@@ -71,7 +79,9 @@ class ContactData extends Component {
         validation: {
           required: true
         },
-        valid: false
+        valid: false,
+        touched: false,
+        errorMessage: 'Please enter a valid email address!'
       },
       deliveryMethod: {
         elementType: 'select',
@@ -142,7 +152,11 @@ class ContactData extends Component {
     };
 
     updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
+
+    if (updatedFormElement.validation) {
+      updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
+    }
+    updatedFormElement.touched = true;
     updatedOrderForm[inputIdentifier] = updatedFormElement;
     this.setState({ orderForm: updatedOrderForm })
   }
@@ -166,7 +180,9 @@ class ContactData extends Component {
             value={formElement.config.value}
             invalid={!formElement.config.valid}
             shouldValidate={formElement.config.validation}
-            changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+            touched={formElement.config.touched}
+            changed={(event) => this.inputChangedHandler(event, formElement.id)}
+            errorMessage={formElement.config.errorMessage} />
           )
         )}
         <Button btnType="Success">ORDER</Button>
