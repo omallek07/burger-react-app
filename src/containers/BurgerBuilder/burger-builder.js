@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/burger';
 import BuildControls from '../../components/Burger/BuildControls/build-controls';
+import axios from '../../axios-orders';
 import Modal from '../../components/UI/Modal/modal';
 import OrderSummary from '../../components/Burger/OrderSummary/order-summary';
 import Spinner from '../../components/UI/Spinner/spinner'
-import axios from '../../axios-orders.js'
 import withErrorHandler from '../../hoc/withErrorHandling/withErrorHandling';
 import { connect } from 'react-redux';
 import * as burgerBuilderActions from '../../store/actions'
@@ -14,8 +14,6 @@ import * as burgerBuilderActions from '../../store/actions'
 class BurgerBuilder extends Component {
   state = {
     purchasing: false,
-    loading: false,
-    error: false
   }
 
   componentDidMount () {
@@ -123,9 +121,9 @@ class BurgerBuilder extends Component {
           price={this.props.price} />
       );
     }
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
+    // if (this.state.loading) {
+    //   orderSummary = <Spinner />;
+    // }
 
     return (
       <Aux>
