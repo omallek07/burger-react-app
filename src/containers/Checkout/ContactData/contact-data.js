@@ -6,8 +6,8 @@ import Button from '../../../components/UI/Button/button';
 import axios from '../../../axios-orders'
 import Spinner from '../../../components/UI/Spinner/spinner';
 import Input from '../../../components/UI/Input/input';
-
-
+import withErrorHandling from '../../../hoc/withErrorHandling/withErrorHandling';
+import * as actions from '../../../store/actions/index';
 
 
 class ContactData extends Component {
@@ -118,12 +118,12 @@ class ContactData extends Component {
     if (rules.maxLength) {
       isValid = value.length <= rules.maxLength && isValid;
     }
+
     return isValid;
   }
 
   orderHandler = (event) => {
     event.preventDefault();
-    this.setState({ loading: true });
 
     const formData = {};
     for (let formElementIdentifier in this.state.orderForm) {
@@ -135,6 +135,8 @@ class ContactData extends Component {
       price: this.props.totalPrice,
       orderData: formData
     }
+    this.props.onOrderBurger(order);
+  }
 
   inputChangedHandler = (event, inputIdentifier) => {
     const updatedOrderForm = {
@@ -158,7 +160,6 @@ class ContactData extends Component {
     for (let inputIdentifier in updatedOrderForm) {
       formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid
     }
-    console.log('formIsValid', formIsValid)
 
     this.setState({ orderForm: updatedOrderForm, formIsValid})
   }
@@ -209,4 +210,8 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(ContactData);
+const mapDispatch = dispatch => {
+  onOrderBurger: (orderData) => dispatch(actions.purchaseBurgerStart(orderData))
+}
+
+export default connect(mapState, mapDispatch)(withErrorHandling(ContactData, axios));
