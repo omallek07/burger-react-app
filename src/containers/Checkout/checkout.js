@@ -10,7 +10,7 @@ class Checkout extends Component {
   //   price: 0
   // }
 
-  componentWillMount() {
+  //componentWillMount() {
     // const query = new URLSearchParams(this.props.location.search);
     // const ingredients = {};
     // let price = 0;
@@ -23,7 +23,7 @@ class Checkout extends Component {
     //   }
     // }
     // this.setState({ingredients, totalPrice: price});
-  }
+  //}
 
   checkoutCancelledHandler = () => {
     this.props.history.goBack();
