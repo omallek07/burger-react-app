@@ -51,7 +51,8 @@ class ContactData extends Component {
         validation: {
           required: true,
           minLength: 5,
-          maxLength: 5
+          maxLength: 5,
+          isNumeric: true
         },
         valid: false,
         touched: false,
@@ -79,7 +80,8 @@ class ContactData extends Component {
         },
         value: '',
         validation: {
-          required: true
+          required: true,
+          isEmail: true
         },
         valid: false,
         touched: false,
@@ -98,12 +100,11 @@ class ContactData extends Component {
               }
             ]
         },
-        value: '',
+        value: 'fastest',
         valid: true
       }
     },
     formIsValid: false,
-    loading: false
   }
 
   checkValidity(value, rules) {
@@ -118,7 +119,14 @@ class ContactData extends Component {
     if (rules.maxLength) {
       isValid = value.length <= rules.maxLength && isValid;
     }
-
+    if (rules.isEmail) {
+      const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      isValid = pattern.test(value) && isValid;
+    }
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
+    }
     return isValid;
   }
 
@@ -191,7 +199,7 @@ class ContactData extends Component {
         <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
       </form>
     )
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />
     }
     return (
@@ -205,13 +213,16 @@ class ContactData extends Component {
 
 const mapState = state => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    loading: state.orders.loading
   }
 }
 
 const mapDispatch = dispatch => {
-  onOrderBurger: (orderData) => dispatch(actions.purchaseBurgerStart(orderData))
-}
+  return {
+    onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+  };
+};
 
 export default connect(mapState, mapDispatch)(withErrorHandling(ContactData, axios));

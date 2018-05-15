@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/checkout-summary'
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import ContactData from './ContactData/contact-data';
 import { connect } from 'react-redux';
 
@@ -34,34 +34,40 @@ class Checkout extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <CheckoutSummary
-          ingredients={this.props.ingredients} checkoutCancelled={this.checkoutCancelledHandler}
-          checkoutContinued={this.checkoutContinuedHandler} />
-        <Route
-          path={`${this.props.match.path}/contact-data`}
-          component={ContactData} />
-          {
-            // render={(props) => (
-            //   <ContactData
-            //     ingredients={this.state.ingredients}
-            //     price={this.props.price}
-            //     {...props}
-            //   />
-            // )
-          }
-      </div>
-    );
+    let summary = <Redirect to='/' />
+    if (this.props.ingredients) {
+      summary = (
+        <div>
+          <CheckoutSummary
+            ingredients={this.props.ingredients}
+            checkoutCancelled={this.checkoutCancelledHandler}
+            checkoutContinued={this.checkoutContinuedHandler} />
+            <Route
+              path={`${this.props.match.path}/contact-data`}
+              component={ContactData} />
+        </div>
+      );
+    }
+    return summary;
+    }
   }
-}
 
-/******* CONTAINER *******/
+  /******* CONTAINER *******/
 
-const mapStateToProps = state => {
-  return {
-    ingredients: state.ingredients
-  }
-};
+  const mapStateToProps = state => {
+    return {
+      ingredients: state.burgerBuilder.ingredients
+    }
+  };
 
-export default connect(mapStateToProps)(Checkout);
+  export default connect(mapStateToProps)(Checkout);
+
+
+// render={(props) => (
+//   <ContactData
+//     ingredients={this.state.ingredients}
+//     price={this.props.price}
+//     {...props}
+//   />
+// )
+
