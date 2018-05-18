@@ -135,7 +135,7 @@ class ContactData extends Component {
 
     const formData = {};
     for (let formElementIdentifier in this.state.orderForm) {
-      formData[formElementIdentifier] = this.state.orderFrom[formElementIdentifier].value
+      formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value
     }
 
     const order = {
@@ -215,7 +215,7 @@ const mapState = state => {
   return {
     ingredients: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
-    loading: state.orders.loading
+    loading: state.order.loading
   }
 }
 
