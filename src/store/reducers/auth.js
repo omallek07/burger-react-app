@@ -31,7 +31,7 @@ const authFail = (state, action) => {
   });
 }
 
-const reducer = (state, action) => {
+const reducer = (state = initalState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START:
       return authStart(state, action);
@@ -42,6 +42,6 @@ const reducer = (state, action) => {
     default:
       return state;
   }
-}
+};
 
 export default reducer;
