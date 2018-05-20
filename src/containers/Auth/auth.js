@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Input from '../../components/UI/Button/input';
+import Input from '../../components/UI/Input/input';
 import Button from '../../components/UI/Button/button';
 import classes from './auth.css';
 import * as actions from '../../store/actions';

@@ -15,7 +15,7 @@ class Orders extends Component {
 
   render () {
     let orders = <Spinner />;
-    if (this.props.loading) {
+    if (this.props.orders) {
       orders = this.props.orders.map(order => (
         <Order
           key={order.id}
@@ -35,7 +35,7 @@ class Orders extends Component {
 
 const mapStateToProps = state => {
   return {
-    orders: state.orders.orders,
+    orders: state.order.orders,
     loading: state.order.loading
   }
 }
