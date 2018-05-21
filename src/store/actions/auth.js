@@ -15,7 +15,7 @@ export const authSuccess = (idToken, userId) => {
   };
 };
 
-export const authFail = (error) => {
+export const authFail = error => {
   return {
     type: actionTypes.AUTH_FAIL,
     error
@@ -25,8 +25,8 @@ export const authFail = (error) => {
 export const logout = () => {
   return {
     type: actionTypes.AUTH_LOGOUT
-  }
-}
+  };
+};
 
 export const checkAuthTimeout = (expirationTime) => {
   return dispatch => {
@@ -56,5 +56,12 @@ export const auth = (email, password, isSignup) => {
     .catch(error => {
       dispatch(authFail(error.response.data.error));
     });
+  };
+};
+
+export const setAuthRedirectPath = path => {
+  return {
+    type: actionTypes.SET_AUTH_REDIRECT_PATH,
+    path
   };
 };
