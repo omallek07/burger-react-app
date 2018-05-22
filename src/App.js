@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Layout from './hoc/Layout/layout';
 import BurgerBuilder from './containers/BurgerBuilder/burger-builder';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from './store/actions';
 import Checkout from './containers/Checkout/checkout';
@@ -20,6 +20,7 @@ class App extends Component {
       <Switch>
         <Route exact path="/" component={BurgerBuilder} />
         <Route path="/auth" component={Auth} />
+        <Redirect to="/" />
       </Switch>
     );
 
@@ -30,6 +31,7 @@ class App extends Component {
           <Route path="/orders" component={Orders} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/logout" component={Logout} />
+          <Redirect to="/" />
         </Switch>
       )
     };
