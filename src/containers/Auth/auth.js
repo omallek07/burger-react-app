@@ -92,7 +92,7 @@ class Auth extends Component {
 
   submitHandler = (event) => {
     event.preventDefault();
-    this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignUp)
+    this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup)
   };
 
   switchAuthModeHandler = () => {
